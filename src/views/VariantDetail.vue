@@ -30,10 +30,11 @@
     <!-- 夜间流程 -->
     <section v-if="v.nightFlow && v.nightFlow.length" class="night-sec">
       <h2 class="sub-title">夜间流程</h2>
-      <div class="night-flow">
-        <div v-for="(step, i) in v.nightFlow" :key="i" class="night-step">
-          <span class="ns-idx">{{ i + 1 }}</span>
-          <span class="ns-name">{{ step }}</span>
+      <div class="night-chart">
+        <div v-for="(step, i) in v.nightFlow" :key="i" class="nc-step">
+          <div class="nc-idx">{{ i + 1 }}</div>
+          <div v-if="i < v.nightFlow.length - 1" class="nc-line"></div>
+          <div class="nc-name">{{ step }}</div>
         </div>
       </div>
       <p class="night-note">夜晚环节由法官依次唤醒，顺序以当场法官宣告为准；标注「首夜」「次夜起」的环节按标注执行。</p>
@@ -213,29 +214,37 @@ watch(() => route.params.id, () => { tab.value = 'rules' })
   background: var(--moon);
 }
 
-.night-flow { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
-.night-step {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 18px 10px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(110, 123, 255, 0.3);
-  background: var(--moon-dim);
+.night-chart { margin-top: 20px; display: flex; flex-direction: column; }
+.nc-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 16px;
+  padding-bottom: 16px;
 }
-.ns-idx {
-  width: 22px; height: 22px;
+.nc-step:last-child { padding-bottom: 0; }
+.nc-idx {
+  width: 28px; height: 28px;
   border-radius: 50%;
-  background: var(--moon);
+  background: radial-gradient(circle at 35% 35%, var(--moon-bright), var(--moon));
   color: #0a0a12;
   font-family: var(--latin);
-  font-size: 11.5px;
+  font-size: 12.5px;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 0 12px rgba(110, 123, 255, 0.35);
 }
-.ns-name { font-size: 13.5px; }
+.nc-line {
+  position: absolute;
+  left: 14px;
+  top: 28px;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(rgba(110, 123, 255, 0.55), rgba(110, 123, 255, 0.08));
+}
+.nc-name { font-size: 14.5px; line-height: 28px; color: var(--ink); }
 
 .night-sec { margin-top: 44px; }
 .night-note { margin-top: 14px; font-size: 12.5px; color: var(--ink-40); }
