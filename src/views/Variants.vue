@@ -18,6 +18,24 @@
           @click="activeTag = t"
         >{{ t }}</button>
       </div>
+      <div class="filter-group">
+        <span class="fg-label">难度</span>
+        <button
+          class="filter-btn"
+          :class="{ on: activeDiff === 0 }"
+          @click="activeDiff = 0"
+        >全部</button>
+        <button
+          v-for="d in 5"
+          :key="d"
+          class="filter-btn"
+          :class="{ on: activeDiff === d }"
+          :title="`${d} 星难度`"
+          @click="activeDiff = d"
+        >
+          <span class="dots"><i v-for="n in d" :key="n" class="on"></i></span>
+        </button>
+      </div>
     </div>
 
     <div class="vlist">
@@ -63,13 +81,15 @@ import { variants } from '../data/variants'
 import { roleMap, camps } from '../data/roles'
 
 const activeTag = ref('全部')
+const activeDiff = ref(0)
 
 const tagFilters = ['全部', '大师赛官方', '经典', '新手入门', '功能狼', '守卫', '第三方', '特殊机制']
 
 const filtered = computed(() =>
   variants.filter((v) => {
-    if (activeTag.value === '全部') return true
-    return v.tags.includes(activeTag.value)
+    if (activeTag.value !== '全部' && !v.tags.includes(activeTag.value)) return false
+    if (activeDiff.value && v.difficulty !== activeDiff.value) return false
+    return true
   })
 )
 </script>
@@ -96,6 +116,9 @@ const filtered = computed(() =>
   font-family: var(--sans);
   cursor: pointer;
   transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .filter-btn:hover { color: var(--ink); }
 .filter-btn.on { color: var(--ink); border-color: var(--moon); background: var(--moon-dim); }
