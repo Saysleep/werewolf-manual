@@ -4,3 +4,6 @@ dist/
 .DS_Store
 Thumbs.db
 npm-debug.log*
+
+# 部署脚本（含服务器信息，严禁提交）
+deploy.sh
