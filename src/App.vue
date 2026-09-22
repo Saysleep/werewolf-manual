@@ -5,6 +5,7 @@
   <header class="topbar">
     <RouterLink to="/" class="mark">狼人杀图鉴</RouterLink>
     <nav>
+      <RouterLink to="/">首页</RouterLink>
       <RouterLink to="/rules">规则</RouterLink>
       <RouterLink to="/roles">角色</RouterLink>
       <RouterLink to="/variants">版型</RouterLink>

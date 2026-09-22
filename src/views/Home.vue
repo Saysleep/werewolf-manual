@@ -108,9 +108,8 @@
 import { variants } from '../data/variants'
 import { roles, camps } from '../data/roles'
 
-const featured = variants.filter((v) =>
-  ['twelve-yunvliebai', 'masters-mixed', 'masters-mech', 'masters-mask-ball', 'masters-warden', 'masters-thief-cupid'].includes(v.id)
-)
+const featuredIds = ['masters-mech', 'masters-mixed', 'twelve-wolf-king-guard', 'knightbeautywolf']
+const featured = featuredIds.map((id) => variants.find((v) => v.id === id)).filter(Boolean)
 
 const cycleSteps = [
   { t: '天黑闭眼', d: '法官宣布入夜，所有玩家闭眼，夜间行动依次进行。', night: true },
