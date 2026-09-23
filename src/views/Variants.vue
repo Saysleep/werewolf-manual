@@ -83,7 +83,7 @@ import { roleMap, camps } from '../data/roles'
 const activeTag = ref('全部')
 const activeDiff = ref(0)
 
-const tagFilters = ['全部', '大师赛官方', '经典', '新手入门', '不见面大狼', '守卫', '第三方', '特殊机制']
+const tagFilters = ['全部', '大师赛官方', '经典', '新手入门', '不见面大狼', '守卫', '第三方', '特殊机制', '娱乐板']
 
 const filtered = computed(() =>
   variants.filter((v) => {

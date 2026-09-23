@@ -153,7 +153,7 @@ export const variants = [
     en: 'NIGHTMARE & GUARD',
     players: 12,
     difficulty: 3,
-    tags: ['经典', '功能狼', '守卫'],
+    tags: ['经典','守卫'],
     summary: '梦魇每晚第一个睁眼施加恐惧，被恐惧的神职当夜形同白板，狼队的刀从此不再怕守卫',
     config: [
       { role: 'nightmare', count: 1 },
@@ -299,7 +299,7 @@ export const variants = [
     en: 'MECH WOLF & PSYCHIC',
     players: 12,
     difficulty: 4,
-    tags: ['大师赛官方', '不见面大狼', '守卫'],
+    tags: ['大师赛官方', '不见面大狼', '守卫', '经典'],
     summary: '京城大师赛官方版型：机械狼每晚模仿一名玩家的身份并学习其技能，通灵师的查验难道一定是真的吗？',
     config: [
       { role: 'mech-wolf', count: 1 },
@@ -350,7 +350,7 @@ export const variants = [
     en: 'MASQUERADE BALL',
     players: 12,
     difficulty: 5,
-    tags: ['大师赛官方', '特殊机制','不见面大狼'],
+    tags: ['大师赛官方', '特殊机制', '不见面大狼'],
     summary: '京城大师赛官方版型舞者的三人舞池暗藏杀机，假面则在舞池里偷换阵营——这是一局关于「谁在跳舞」的信息战',
     config: [
       { role: 'mask-wolf', count: 1 },
@@ -399,7 +399,7 @@ export const variants = [
     en: 'THE HALF-BLOOD',
     players: 12,
     difficulty: 2,
-    tags: ['大师赛官方', '经典'],
+    tags: ['大师赛官方'],
     summary: '京城大师赛官方版型经典预女猎白加入一张混血儿：TA 的阵营取决于首夜认下的榜样，是好人里最不确定的那张牌',
     config: [
       { role: 'wolf', count: 4 },
@@ -447,7 +447,7 @@ variants.push(
     en: 'ALL OR NOTHING',
     players: 12,
     difficulty: 5,
-    tags: ['大师赛官方', '功能狼'],
+    tags: ['大师赛官方','特殊机制'],
     summary: '京城大师赛官方版型典狱长的「交易」是一场囚徒困境：合作则共赢，背叛则独活——每晚都有两个人在黑暗里互相猜心',
     config: [
       { role: 'warden', count: 1 },
@@ -607,7 +607,7 @@ variants.push(
   //   en: 'BEAR & HIDDEN WOLF',
   //   players: 12,
   //   difficulty: 3,
-  //   tags: ['大师赛官方', '功能狼'],
+  //   tags: ['大师赛官方', '不见面大狼'],
   //   summary: '京城大师赛官方版型熊的咆哮是最朴素的位置学信息，而隐狼潜伏在狼队视野之外，连咆哮都不会为 TA 响起',
   //   config: [
   //     { role: 'hidden-wolf', count: 1 },
@@ -650,7 +650,7 @@ variants.push(
   //   players: 12,
   //   difficulty: 4,
   //   tags: ['大师赛官方', '第三方'],
-  //   summary: '京城大师赛官方版型14 张牌 12 个人，盗贼埋下一张秘密，丘比特系上一段姻缘——人狼恋出现时，全场都是第三方的猎物',
+  //   summary: '京城大师赛官方版型14 张牌 12 个人，盗贼埋下一张秘密，当丘比特链接了人狼恋时，全场都是第三方的猎物',
   //   config: [
   //     { role: 'thief', count: 1 },
   //     { role: 'cupid', count: 1 },
@@ -664,7 +664,7 @@ variants.push(
   //   ],
   //   rules: [
   //     '本版型共有 14 张身份牌，实到 12 名玩家：盗贼首夜第一个被唤醒，从剩余两张底牌中选择一张作为本局身份；若牌堆中有狼人阵营角色，必须选择狼人阵营牌',
-  //     '丘比特首夜选择任意两名玩家成为情侣：丘比特不知道情侣身份，情侣彼此不知道对方身份，也不知道丘比特是谁',
+  //     '丘比特首夜选择任意两名玩家成为情侣：丘比特不知道情侣身份，情侣彼此不知道对方身份，也不知道丘比特是谁，若情侣阵营一致，则丘比特归属于该阵营',
   //     '好人与狼人结成情侣时，丘比特与情侣组成第三方阵营（不改变原有身份与技能，只转变阵营），第三方获胜条件为屠城；同阵营情侣则随原阵营胜负',
   //     '情侣一方出局，另一方殉情出局；殉情出局的狼王或猎人不能发动技能',
   //     '特别说明：狼人必须统一刀型才视为击杀成功，否则视为空刀',
