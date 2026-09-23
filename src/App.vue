@@ -9,6 +9,7 @@
       <RouterLink to="/rules">规则</RouterLink>
       <RouterLink to="/roles">角色</RouterLink>
       <RouterLink to="/variants">版型</RouterLink>
+      <button class="tb-search" @click="searchEl.open()">搜索</button>
     </nav>
   </header>
 
@@ -35,6 +36,10 @@
         </RouterLink>
       </nav>
 
+      <button class="search-entry" @click="searchEl.open()">
+        <span class="se-ico">⌕</span>搜索<span class="se-kbd">⌘ K</span>
+      </button>
+
       <div class="foot">
         <div><span class="moon-mini"></span>天黑请闭眼</div>
         <div style="margin-top: 6px">狼人杀规则与版型手册 · 静态站点</div>
@@ -49,11 +54,15 @@
       </RouterView>
     </main>
   </div>
+
+  <GlobalSearch ref="searchEl" />
 </template>
 
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue'
+import GlobalSearch from './components/GlobalSearch.vue'
 
+const searchEl = ref(null)
 const progress = ref(0)
 const onScroll = () => {
   const h = document.documentElement
@@ -63,3 +72,45 @@ const onScroll = () => {
 onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }))
 onUnmounted(() => window.removeEventListener('scroll', onScroll))
 </script>
+
+<style scoped>
+.search-entry {
+  margin-top: 20px;
+  padding: 12px 0 0 20px;
+  border: none;
+  border-top: 1px solid var(--hairline);
+  background: none;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-family: var(--sans);
+  font-size: 14.5px;
+  color: var(--ink-60);
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s ease;
+}
+.search-entry:hover { color: var(--ink); }
+.se-ico { color: var(--moon-bright); font-size: 15px; }
+.se-kbd {
+  margin-left: auto;
+  font-family: var(--latin);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  color: var(--ink-40);
+  border: 1px solid var(--ink-14);
+  border-radius: 6px;
+  padding: 1px 7px;
+}
+.tb-search {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  color: var(--ink-60);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.tb-search:hover { color: var(--ink); }
+</style>

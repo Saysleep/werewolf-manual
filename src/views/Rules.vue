@@ -6,10 +6,14 @@
       建议新手先看这里哦
     </p>
 
+    <div class="anchor-chips">
+      <button v-for="a in anchors" :key="a.id" class="chip-btn" @click="jumpTo(a.id)">{{ a.name }}</button>
+    </div>
+
     <hr class="rule-hr" />
 
     <!-- 游戏流程 -->
-    <section>
+    <section id="sec-flow">
       <h2 class="section-title"><span class="no">01</span>游戏流程</h2>
       <div class="flow">
         <div v-for="(s, i) in flowSteps" :key="s.t" class="flow-row">
@@ -28,7 +32,7 @@
     <hr class="rule-hr" />
 
     <!-- 胜负判定与规则细节 -->
-    <section>
+    <section id="sec-win">
       <h2 class="section-title"><span class="no">02</span>胜负判定</h2>
       <div class="win-grid">
         <div class="win-card">
@@ -61,7 +65,7 @@
     <hr class="rule-hr" />
 
     <!-- 发言规范与违规 -->
-    <section>
+    <section id="sec-speech">
       <h2 class="section-title"><span class="no">03</span>发言规范与违规</h2>
       <div class="win-grid">
         <div class="win-card">
@@ -86,12 +90,15 @@
     <hr class="rule-hr" />
 
     <!-- 术语表 -->
-    <section>
+    <section id="sec-glossary">
       <h2 class="section-title"><span class="no">04</span>术语表</h2>
-      <div class="glossary">
-        <div v-for="g in glossary" :key="g.term" class="gloss-item">
-          <b>{{ g.term }}</b>
-          <p>{{ g.def }}</p>
+      <div v-for="gc in glossaryGroups" :key="gc.key" class="gloss-group">
+        <h3 class="gloss-cat">{{ gc.name }}</h3>
+        <div class="glossary">
+          <div v-for="g in gc.items" :key="g.term" class="gloss-item">
+            <b>{{ g.term }}</b>
+            <p>{{ g.def }}</p>
+          </div>
         </div>
       </div>
     </section>
@@ -99,7 +106,7 @@
     <hr class="rule-hr" />
 
     <!-- 附录：面杀实务 -->
-    <section>
+    <section id="sec-appendix">
       <h2 class="section-title"><span class="no">05</span>附录 · 面杀法官手势</h2>
       <div class="win-grid">
         <div class="win-card">
@@ -124,6 +131,25 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { glossary, glossaryCats } from '../data/glossary'
+
+const anchors = [
+  { id: 'sec-flow', name: '游戏流程' },
+  { id: 'sec-win', name: '胜负判定' },
+  { id: 'sec-speech', name: '发言规范与违规' },
+  { id: 'sec-glossary', name: '术语表' },
+  { id: 'sec-appendix', name: '附录 · 面杀法官手势' },
+]
+const jumpTo = (id) => {
+  const el = document.getElementById(id)
+  if (el) el.scrollIntoView({ behavior: 'smooth' })
+}
+
+const glossaryGroups = computed(() =>
+  glossaryCats.map((c) => ({ ...c, items: glossary.filter((g) => g.cat === c.key) }))
+)
+
 const flowSteps = [
   { t: '天黑请闭眼', night: true, d: '法官宣布入夜，所有玩家闭眼低头，不得发出任何声音或动作。' },
   { t: '狼人行动', night: true, d: '狼人睁眼互认同伴，用手势共同选定一名袭击目标后闭眼。功能狼（梦魇、狼美人等）按版型规定的顺序行动。' },
@@ -136,29 +162,6 @@ const flowSteps = [
   { t: '放逐投票', night: false, d: '如果有警长，警长可以选择一个号码来归票，该票警长投出时拥有1.5票；警长也可以选择多个号码来进行多人PK，此时警长1.5票无效；若无警长则自由投票。全员同时举票，禁止跟票、变票，得票最多者出局留遗言；平票时平票玩家进入 PK 发言后再投一次，二次平票则当日无人出局。' },
   { t: '发表遗言与发动技能', night: false, d: '白天出局的玩家可以发表遗言，遗言结束后可以选择发动技能（猎人在该阶段开枪）' },
   { t: '天黑请闭眼', night: true, d: '法官宣布入夜，所有玩家闭眼低头，不得发出任何声音或动作。循环往复，直到游戏结束。' },
-
-]
-
-const glossary = [
-  { term: '金水', def: '预言家验出的好人。明金水是被全场认可的好人身份。' },
-  { term: '查杀', def: '预言家验出的狼人，起跳报验人时的核心信息。' },
-  { term: '银水', def: '女巫用解药救下的人，身份偏好但不保真（可能救了自刀狼）。' },
-  { term: '铜水', def: '守卫用守护救下的人，身份偏好。' },
-  { term: '悍跳', def: '狼人冒充神职发言（多为假预言家），抢信息位与警徽。' },
-  { term: '表水', def: '平民通过发言逻辑自证清白，是民牌的核心工作。' },
-  { term: '挡刀', def: '故意暴露自己吸引狼人袭击，保护更关键的神职。' },
-  { term: '抗推', def: '白天集中票型把某位玩家投出局，多用于狼推好人。' },
-  { term: '自刀', def: '狼人夜里袭击自己（或队友），骗取女巫解药做高身份。' },
-  { term: '倒钩', def: '狼人站边真预言家、打队友，把自己洗进好人堆里。' },
-  { term: '垫飞', def: '狼人故意把某好人发言捧高并放大自己发言的漏洞，引导好人互踩。' },
-  { term: '警徽流', def: '预言家当选警长后，通过移交警徽的方向传递验人结果的战术。' },
-  { term: '奶穿', def: '同一玩家同夜被守卫守护又被女巫解药救，反而死亡的规则事故。' },
-  { term: '上警', def: '举手报名参与警长竞选；未上警的玩家负责投票选出警长。' },
-  { term: '退水', def: '警长竞选中途退出竞选，退水者失去本轮投票权。' },
-  { term: 'PK', def: '放逐投票平票后，平票玩家加赛发言、全场再次投票的环节。' },
-  { term: '双爆吞警徽', def: '警长竞选期间连续两只狼人自爆，导致本局警徽流失。' },
-  { term: '自爆吞毒', def: '警长竞选期间由于死讯还未公开，若在退水自爆环节自爆的狼人刚好吃毒，则相当于覆盖了女巫毒药的出局效果，仅警上的退水自爆环节可以触发这个效果' },
-  { term: '拉杆', def: '某些特殊版型中以通灵师（查验具体底牌身份）代替预言家，狼人悍跳通灵师给好人发身份时，猜测其身份并报出' },
 
 ]
 </script>
@@ -223,4 +226,26 @@ const glossary = [
 .gloss-item { padding: 14px 0; border-top: 1px solid var(--hairline); }
 .gloss-item b { color: var(--moon-bright); font-weight: 600; font-size: 14.5px; }
 .gloss-item p { font-size: 13px; color: var(--ink-60); margin-top: 2px; }
+
+/* 术语分组 */
+.gloss-group + .gloss-group { margin-top: 30px; }
+.gloss-cat { font-family: var(--serif); font-size: 15px; letter-spacing: 0.12em; color: var(--ink-60); }
+.gloss-group .glossary { margin-top: 10px; }
+
+/* 锚点目录 */
+.anchor-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+.chip-btn {
+  height: 30px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--ink-14);
+  background: transparent;
+  color: var(--ink-60);
+  font-size: 12.5px;
+  font-family: var(--sans);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.chip-btn:hover { color: var(--ink); border-color: var(--moon); background: var(--moon-dim); }
+section[id] { scroll-margin-top: 72px; }
 </style>
