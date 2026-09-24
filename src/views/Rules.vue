@@ -95,7 +95,7 @@
       <div v-for="gc in glossaryGroups" :key="gc.key" class="gloss-group">
         <h3 class="gloss-cat">{{ gc.name }}</h3>
         <div class="glossary">
-          <div v-for="g in gc.items" :key="g.term" class="gloss-item">
+          <div v-for="g in gc.items" :key="g.term" :id="'term-' + g.gi" class="gloss-item" :class="{ 'gloss-flash': 'term-' + g.gi === highlight }">
             <b>{{ g.term }}</b>
             <p>{{ g.def }}</p>
           </div>
@@ -131,7 +131,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { glossary, glossaryCats } from '../data/glossary'
 
 const anchors = [
@@ -146,8 +147,25 @@ const jumpTo = (id) => {
   if (el) el.scrollIntoView({ behavior: 'smooth' })
 }
 
+const route = useRoute()
+const highlight = ref('')
+let flashTimer
+const applyHash = () => {
+  clearTimeout(flashTimer)
+  highlight.value = /^#term-\d+$/.test(route.hash) ? route.hash.slice(1) : ''
+  if (highlight.value) flashTimer = setTimeout(() => { highlight.value = '' }, 2000)
+}
+onMounted(applyHash)
+onUnmounted(() => clearTimeout(flashTimer))
+watch(() => route.hash, applyHash)
+
 const glossaryGroups = computed(() =>
-  glossaryCats.map((c) => ({ ...c, items: glossary.filter((g) => g.cat === c.key) }))
+  glossaryCats.map((c) => ({
+    ...c,
+    items: glossary
+      .map((g, i) => ({ ...g, gi: i }))
+      .filter((g) => g.cat === c.key),
+  }))
 )
 
 const flowSteps = [
@@ -248,4 +266,12 @@ const flowSteps = [
 }
 .chip-btn:hover { color: var(--ink); border-color: var(--moon); background: var(--moon-dim); }
 section[id] { scroll-margin-top: 72px; }
+
+/* 术语锚点高亮 */
+.gloss-item[id] { scroll-margin-top: 80px; }
+.gloss-flash { border-radius: 8px; animation: gloss-flash 2s ease; }
+@keyframes gloss-flash {
+  0%, 100% { background: transparent; }
+  20%, 60% { background: var(--moon-dim); }
+}
 </style>

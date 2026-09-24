@@ -79,15 +79,16 @@ const matched = computed(() => {
   const rs = roles
     .filter((r) => `${r.name}${r.en}${camps[r.camp].name}${r.skill}`.toLowerCase().includes(q))
     .slice(0, 8)
-    .map((r) => ({ type: 'role', name: r.name, line: camps[r.camp].name, to: '/roles' }))
+    .map((r) => ({ type: 'role', name: r.name, line: camps[r.camp].name, to: `/roles?q=${encodeURIComponent(r.name)}` }))
   const ts = glossary
-    .filter((g) => `${g.term}${g.def}`.toLowerCase().includes(q))
+    .map((g, i) => ({ g, i }))
+    .filter(({ g }) => `${g.term}${g.def}`.toLowerCase().includes(q))
     .slice(0, 8)
-    .map((g) => ({
+    .map(({ g, i }) => ({
       type: 'term',
       name: g.term,
       line: g.def.length > 36 ? `${g.def.slice(0, 36)}…` : g.def,
-      to: '/rules#sec-glossary',
+      to: `/rules#term-${i}`,
     }))
   let fi = 0
   for (const arr of [vs, rs, ts]) for (const it of arr) it.fi = fi++

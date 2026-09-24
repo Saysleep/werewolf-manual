@@ -6,6 +6,17 @@
       全部角色按阵营归档，点选筛选快速查阅任意一张牌。
     </p>
 
+    <div class="role-search">
+      <input
+        v-model="kw"
+        class="role-search-input"
+        type="text"
+        placeholder="搜索角色名 / 技能…"
+        @input="onInput"
+      />
+      <button v-if="kw" class="role-search-clear" @click="clearKw">×</button>
+    </div>
+
     <div class="camp-filter">
       <button
         v-for="f in campFilters"
@@ -29,13 +40,31 @@
         <p class="role-note">{{ r.notes }}</p>
       </div>
     </div>
+    <p v-if="!filteredRoles.length" class="role-empty">没有匹配的角色</p>
   </div>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { roles, camps } from '../data/roles'
 import RoleIcon from '../components/RoleIcon.vue'
+
+const route = useRoute()
+const router = useRouter()
+
+const kw = ref(typeof route.query.q === 'string' ? route.query.q : '')
+watch(
+  () => route.query.q,
+  (q) => { kw.value = typeof q === 'string' ? q : '' }
+)
+const onInput = () => {
+  router.replace({ query: { ...route.query, q: kw.value || undefined } })
+}
+const clearKw = () => {
+  kw.value = ''
+  router.replace({ query: { ...route.query, q: undefined } })
+}
 
 const campFilters = [
   { key: 'all', name: '全部' },
@@ -45,9 +74,14 @@ const campFilters = [
   { key: 'third', name: '第三方' },
 ]
 const activeCamp = ref('all')
-const filteredRoles = computed(() =>
-  activeCamp.value === 'all' ? roles : roles.filter((r) => r.camp === activeCamp.value)
-)
+const filteredRoles = computed(() => {
+  const q = kw.value.replace(/\s+/g, '').toLowerCase()
+  return roles.filter((r) => {
+    if (activeCamp.value !== 'all' && r.camp !== activeCamp.value) return false
+    if (!q) return true
+    return `${r.name}${r.en}${camps[r.camp].name}${r.skill}`.toLowerCase().includes(q)
+  })
+})
 </script>
 
 <style scoped>
@@ -95,4 +129,35 @@ const filteredRoles = computed(() =>
 .role-en { font-family: var(--latin); font-size: 10px; letter-spacing: 0.18em; color: var(--ink-40); text-transform: uppercase; }
 .role-skill { margin-top: 14px; font-size: 13.5px; color: var(--ink); line-height: 1.75; }
 .role-note { margin-top: 8px; font-size: 12.5px; color: var(--ink-40); border-top: 1px dashed var(--hairline); padding-top: 10px; }
+
+.role-search { position: relative; margin-top: 28px; width: min(360px, 100%); }
+.role-search-input {
+  width: 100%;
+  height: 38px;
+  padding: 0 36px 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--ink-14);
+  background: transparent;
+  color: var(--ink);
+  font-size: 13.5px;
+  font-family: var(--sans);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.role-search-input:focus { border-color: var(--moon); }
+.role-search-input::placeholder { color: var(--ink-40); }
+.role-search-clear {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  color: var(--ink-40);
+  font-size: 16px;
+  cursor: pointer;
+}
+.role-search-clear:hover { color: var(--ink); }
+.role-search + .camp-filter { margin-top: 14px; }
+.role-empty { margin-top: 40px; color: var(--ink-40); text-align: center; }
 </style>
