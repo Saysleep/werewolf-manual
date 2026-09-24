@@ -15,26 +15,6 @@
             <RouterLink to="/variants" class="btn ghost">直接查看版型</RouterLink>
           </div>
         </div>
-        <div class="hero-moon" aria-hidden="true">
-          <div class="moon-glow"></div>
-          <svg viewBox="0 0 200 200" class="moon-svg">
-            <defs>
-              <radialGradient id="mg" cx="38%" cy="34%" r="80%">
-                <stop offset="0%" stop-color="#aab3ff" />
-                <stop offset="55%" stop-color="#6e7bff" />
-                <stop offset="100%" stop-color="#3a41a8" />
-              </radialGradient>
-            </defs>
-            <circle cx="100" cy="100" r="78" fill="url(#mg)" />
-            <circle cx="72" cy="78" r="12" fill="rgba(8,8,13,.18)" />
-            <circle cx="122" cy="112" r="17" fill="rgba(8,8,13,.14)" />
-            <circle cx="92" cy="136" r="8" fill="rgba(8,8,13,.16)" />
-            <circle cx="132" cy="66" r="7" fill="rgba(8,8,13,.12)" />
-          </svg>
-          <svg viewBox="0 0 24 24" class="wolf-line" fill="none" stroke="#e6e3da" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 20 L6 8 L10 12 L12 5 L14 12 L18 8 L20 20 Z" />
-          </svg>
-        </div>
       </div>
       <div class="hero-stats">
         <div class="stat"><b>{{ variants.length }}</b><span>收录版型</span></div>
@@ -146,7 +126,7 @@ const campList = [
 
 .hero-inner {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(240px, 1fr);
+  grid-template-columns: 1fr;
   gap: 48px;
   align-items: center;
 }
@@ -177,25 +157,6 @@ const campList = [
 .btn.primary:hover { background: var(--moon-bright); transform: translateY(-2px); }
 .btn.ghost { border: 1px solid var(--ink-14); color: var(--ink-60); }
 .btn.ghost:hover { border-color: var(--moon); color: var(--ink); }
-
-.hero-moon { position: relative; display: flex; justify-content: center; }
-.moon-svg { width: min(260px, 60%); filter: drop-shadow(0 0 48px rgba(110, 123, 255, 0.35)); animation: float 7s ease-in-out infinite; }
-.moon-glow {
-  position: absolute;
-  inset: 12%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(110, 123, 255, 0.14), transparent 70%);
-  animation: breathe 5s ease-in-out infinite;
-}
-.wolf-line {
-  position: absolute;
-  bottom: 4%;
-  right: 6%;
-  width: 64px;
-  opacity: 0.55;
-}
-@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-@keyframes breathe { 0%, 100% { opacity: 0.7; } 50% { opacity: 1.2; } }
 
 .hero-stats {
   display: grid;
@@ -284,9 +245,6 @@ const campList = [
 .camp p { margin-top: 8px; font-size: 13.5px; color: var(--ink-60); }
 
 @media (max-width: 860px) {
-  .hero-inner { grid-template-columns: 1fr; }
-  .hero-moon { order: -1; }
-  .moon-svg { width: 180px; }
   .hero-stats { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
