@@ -20,6 +20,7 @@
 | 角色图鉴 | `/roles` | 31 个角色，阵营筛选 + 关键字搜索（角色名 / 英文名 / 技能） |
 | 版型大全 | `/variants` | 11 个 12 人版型，标签 + 难度（1–5）组合筛选 |
 | 版型详情 | `/variants/:id` | 阵营配置、竖向夜间流程图、规则与攻略（好人 / 狼人 / 进阶三视角）、上一版下一版导航 |
+| 社区 | `/community/`（外链整页跳转） | 瞎掰王 + 吉林麻将线上组局，独立全栈应用（xiabaiwang-vue-web 构建产物 + Spring Boot 后端），非本站路由 |
 
 全局能力：
 
@@ -98,6 +99,12 @@ bash deploy.sh
 脚本包含服务器信息，**已加入 .gitignore，严禁提交**。
 
 线上环境：阿里云 `/opt/xiabaiwang/frontend/dist`，nginx 容器 bind mount 该目录，替换时必须替换目录内容而非删除目录本身。
+
+### 社区应用（/community/）
+
+- 社区前端（xiabaiwang-vue-web，`base: '/community/'`）部署在服务器独立目录 `/opt/xiabaiwang/community/dist`，由 xiabaiwang-vue-web 仓库根目录的 `deploy.sh` 部署，与本站互不干扰
+- nginx（`/opt/xiabaiwang/frontend/nginx.conf`，bind mount 进容器）含三段：`/community/` 静态托管（history 回退到社区自己的 index.html）、`/api/` 与 `/ws/` 反代到 `xiabaiwang-api-server:8080`（WS 已配 Upgrade + 3600s 超时）
+- 社区挂载点（容器内 `/usr/share/nginx/community-root/community`）**刻意放在主站 html 目录之外**——挂在里面会被本仓库 deploy.sh 的 `rm -rf dist/*` 清掉导致 500，有教训
 
 ## 内容口径约定（重要）
 
