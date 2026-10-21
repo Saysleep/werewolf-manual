@@ -47,7 +47,8 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { roles, camps } from '../data/roles'
+import { roles } from '../data/content'
+import { camps } from '../data/roles'
 import RoleIcon from '../components/RoleIcon.vue'
 
 const route = useRoute()

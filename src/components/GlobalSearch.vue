@@ -50,8 +50,9 @@
 <script setup>
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { variants } from '../data/variants'
-import { roles, camps } from '../data/roles'
+import { variants } from '../data/content'
+import { roles } from '../data/content'
+import { camps } from '../data/roles'
 import { glossary } from '../data/glossary'
 
 const open = ref(false)

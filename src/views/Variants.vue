@@ -77,8 +77,8 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { variants } from '../data/variants'
-import { roleMap, camps } from '../data/roles'
+import { variants, roleMap } from '../data/content'
+import { camps } from '../data/roles'
 
 const activeTag = ref('全部')
 const activeDiff = ref(0)

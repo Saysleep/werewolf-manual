@@ -6,7 +6,9 @@ import Rules from './views/Rules.vue'
 import Roles from './views/Roles.vue'
 import Variants from './views/Variants.vue'
 import VariantDetail from './views/VariantDetail.vue'
-import { variantMap } from './data/variants'
+// 模拟对局暂时下线（首页入口与路由一并注释，代码保留）
+// import Simulator from './views/Simulator.vue'
+import { variantMap, initContent } from './data/content'
 import './style.css'
 
 const router = createRouter({
@@ -17,6 +19,7 @@ const router = createRouter({
     { path: '/roles', component: Roles },
     { path: '/variants', component: Variants },
     { path: '/variants/:id', component: VariantDetail },
+    // { path: '/simulator', component: Simulator }, // 模拟对局暂时下线，代码保留
   ],
   scrollBehavior(to) {
     if (to.hash) return { el: to.hash }
@@ -35,4 +38,5 @@ router.afterEach((to) => {
   }
 })
 
-createApp(App).use(router).mount('#app')
+// 先拉取角色与版型数据（后端 DB 可直改），失败或超时则使用内置兜底数据，再挂载应用
+initContent().finally(() => createApp(App).use(router).mount('#app'))

@@ -63,6 +63,10 @@
     </main>
   </div>
 
+  <footer class="beian">
+    <a href="https://beian.mps.gov.cn/#/query/webSearch?code=22028302000175" rel="noreferrer" target="_blank">吉公网安备22028302000175号</a>
+  </footer>
+
   <GlobalSearch ref="searchEl" />
 </template>
 
@@ -121,4 +125,18 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   transition: color 0.2s ease;
 }
 .tb-search:hover { color: var(--ink); }
+
+/* 公安备案号页脚（全站每页底部） */
+.beian {
+  padding: 20px 0 24px;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 12px;
+}
+.beian a {
+  color: var(--ink-40);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.beian a:hover { color: var(--ink-60); }
 </style>

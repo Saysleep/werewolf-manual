@@ -43,6 +43,18 @@
 
     <hr class="rule-hr" />
 
+    <!-- 模拟对局（暂时隐藏：交互式对局复杂度超预期，模块代码保留，恢复时取消注释即可）
+    <section>
+      <h2 class="section-title"><span class="no">02</span>模拟对局</h2>
+      <p class="sec-lede">一场编排好的预女猎白 12 人局：逐步回放每个角色的行动与结算，上桌前先看一遍。</p>
+      <div class="hero-cta">
+        <RouterLink to="/simulator" class="btn primary">进入模拟对局</RouterLink>
+      </div>
+    </section>
+
+    <hr class="rule-hr" />
+    -->
+
     <!-- 精选版型 -->
     <section>
       <h2 class="section-title"><span class="no">02</span>版型速览</h2>
@@ -85,8 +97,8 @@
 </template>
 
 <script setup>
-import { variants } from '../data/variants'
-import { roles, camps } from '../data/roles'
+import { variants, roles } from '../data/content'
+import { camps } from '../data/roles'
 
 const featuredIds = ['masters-mech', 'masters-mixed', 'twelve-wolf-king-guard', 'knightbeautywolf']
 const featured = featuredIds.map((id) => variants.find((v) => v.id === id)).filter(Boolean)

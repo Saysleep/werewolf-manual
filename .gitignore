@@ -7,3 +7,8 @@ npm-debug.log*
 
 # 部署脚本（含服务器信息，严禁提交）
 deploy.sh
+
+# 本地图鉴内容看板工具（纯本地使用，不进仓库）
+admin.html
+src/admin/
+启动看板.bat
