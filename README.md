@@ -1,82 +1,108 @@
 # 狼人杀图鉴 · 规则与版型手册
 
-一个面向面杀玩家的狼人杀规则查阅站：12 人标准局的完整规则、角色图鉴与版型玩法，上桌之前查一查。
+面向面杀玩家的狼人杀规则查阅站，提供基础规则、角色图鉴、版型配置与玩法攻略。网站采用暗色主题和响应式布局，支持电脑与手机访问。
 
-线上地址：<https://www.palplay.online>
-仓库：<git@github.com:Saysleep/werewolf-manual.git>
+- 线上地址：<https://www.palplay.online>
+- 社区入口：<https://www.palplay.online/community/>
+- 社区前端：[xiabaiwang-vue-web](https://github.com/Saysleep/xiabaiwang-vue-web)
+- 后端服务：[xiabaiwang-api-server](https://github.com/Saysleep/xiabaiwang-api-server)
 
 ## 技术栈
 
-- Vue 3（`<script setup>`）+ Vite 6 + vue-router 4（hash 路由）
-- 纯手写暗色主题 CSS（CSS 变量，无 UI 框架、无组件库，零额外运行时依赖）
-- 纯静态站点，构建产物为 `dist/`，由 nginx 容器托管
+- Vue 3（`<script setup>`）
+- Vite 6
+- Vue Router 4（Hash 路由）
+- 原生 CSS（CSS 变量，无 UI 组件库）
+- 构建产物为纯静态文件，可由 Nginx 等静态服务器托管
 
 ## 功能总览
 
 | 页面 | 路由 | 内容 |
 | --- | --- | --- |
-| 首页 | `/` | 简介、收录统计、版型速览（机械狼通灵师 / 预女猎白混 / 狼王守卫 / 狼美人骑士）、四大阵营 |
-| 基础规则 | `/rules` | 昼夜流程、胜负判定、发言规范与违规、术语表、附录·面杀法官手势；顶部锚点目录快速跳转 |
-| 角色图鉴 | `/roles` | 若干个角色，阵营筛选 + 关键字搜索（角色名 / 英文名 / 技能） |
-| 版型大全 | `/variants` | 若干个 12 人版型，标签 + 难度（1–5）组合筛选 |
-| 版型详情 | `/variants/:id` | 阵营配置、竖向夜间流程图、规则与攻略（好人 / 狼人 / 进阶三视角）、上一版下一版导航 |
-| 社区 | `/community/`（外链整页跳转） | 独立全栈应用（xiabaiwang-vue-web 构建产物 + Spring Boot 后端），非本站路由 |
+| 首页 | `/` | 网站简介、版型速览与快捷入口 |
+| 基础规则 | `/rules` | 昼夜流程、胜负判定、发言规范、术语表与法官手势 |
+| 角色图鉴 | `/roles` | 角色技能、阵营筛选和关键字搜索 |
+| 版型大全 | `/variants` | 版型标签、难度筛选与阵容配置 |
+| 版型详情 | `/variants/:id` | 夜间流程、规则说明、多视角攻略和上下版型导航 |
+| 社区 | `/community/` | 独立全栈应用，不属于本站内部路由 |
 
 全局能力：
 
-- **全局搜索（Ctrl / Cmd + K）**：跨版型、角色、术语搜索；版型直达详情页，角色带关键字直达筛选结果，术语锚点直达条目并高亮闪烁
-- **动态页面标题**：详情页显示「版型名 · 版型大全 · 狼人杀图鉴」
-- 顶部阅读进度条、页面淡入过渡、移动端独立顶栏，响应式布局
+- `Ctrl / Cmd + K` 跨角色、版型和术语搜索。
+- 动态页面标题、Hash 锚点跳转和术语高亮。
+- 顶部阅读进度条、页面过渡和移动端响应式布局。
+- 角色与版型优先从后端读取；接口不可用或超时后使用前端内置数据，保证主站可访问。
 
-## 目录结构
+## 本地开发
 
-```
-src/
-├── main.js                  # 入口：路由 + scrollBehavior(hash 锚点) + 动态 title
-├── App.vue                  # 布局：侧边栏导航 + 顶栏 + 搜索入口 + 进度条
-├── style.css                # 全局暗色主题（CSS 变量）
-├── components/
-│   ├── GlobalSearch.vue     # 全局搜索弹层（Ctrl+K）
-│   └── RoleIcon.vue         # 角色阵营图标
-├── views/
-│   ├── Home.vue             # 首页
-│   ├── Rules.vue            # 基础规则（数据来自 data/glossary.js）
-│   ├── Roles.vue            # 角色图鉴
-│   ├── Variants.vue         # 版型大全
-│   └── VariantDetail.vue    # 版型详情（夜间流程图等）
-└── data/
-    ├── roles.js             # 角色数据
-    ├── variants.js          # 版型数据
-    └── glossary.js          # 术语数据（glossary + glossaryCats）
+安装满足 Vite 6 要求的 Node.js，然后执行：
+
+```bash
+npm install
+npm run dev
 ```
 
-## 数据模型
+开发服务器会将 `/api` 代理到 `http://localhost:8080`。不启动后端时，主站仍可使用内置图鉴数据。
 
-### `data/variants.js`
+构建与本地预览：
+
+```bash
+npm run build
+npm run preview
+```
+
+构建产物位于 `dist/`。
+
+## 内容维护
+
+角色和版型有两层数据来源：
+
+1. 后端 `GET /api/manual/content` 返回数据库中的最新内容。
+2. `src/data/roles.js` 与 `src/data/variants.js` 提供内置兜底数据。
+
+`src/data/content.js` 负责初始化数据并生成 `roleMap`、`variantMap`。数据库内容适合线上维护；内置数据用于容灾，修改后需要重新构建部署。
+
+版型数据结构示例：
 
 ```js
 {
-  id: 'twelve-yunvliebai',   // 唯一标识（用于路由与搜索）
+  id: 'twelve-yunvliebai',
   name: '预女猎白',
   en: 'THE CLASSIC',
   players: 12,
-  difficulty: 1,             // 1–5，用于难度筛选
-  tags: ['经典', '新手入门'], // 用于标签筛选
+  difficulty: 1,
+  tags: ['经典', '新手入门'],
   summary: '…',
-  config: [{ role: '角色id', count: 1 }],  // 阵营配置
-  nightFlow: ['守卫（守护）', …],           // 夜间流程（顺序即法官唤醒顺序）
-  rules: ['屠边制：…', …],                  // 版型规则结算口径
-  guide: [{ title: '好人思路', points: […] }], // 攻略（三视角）
+  config: [{ role: '角色id', count: 1 }],
+  nightFlow: ['守卫（守护）', '…'],
+  rules: ['屠边制：…'],
+  guide: [{ title: '好人思路', points: ['…'] }],
 }
 ```
 
-另有 `variantMap`（id → 版型）供详情页与动态标题查询。
+术语位于 `src/data/glossary.js`，分为 `flow`、`id`、`tactic` 三组。术语锚点使用扁平数组下标，已有条目顺序应保持稳定，避免搜索链接失效。
 
-### `data/roles.js` / `data/glossary.js`
+## 目录结构
 
-- 角色：id、名称、英文名、阵营、技能描述等，由 `Roles.vue` 与全局搜索消费
-- 术语：`{ term, def, cat }`，`cat` 为 `flow` / `id` / `tactic` 三组；术语锚点 id `term-<下标>` 与全局搜索联动，**下标基于扁平数组，稳定不可变**
+```text
+src/
+├── main.js                  # 路由、锚点滚动、动态标题与内容初始化
+├── App.vue                  # 全站布局与导航
+├── style.css                # 暗色主题和响应式样式
+├── components/
+│   ├── GlobalSearch.vue     # 全局搜索
+│   └── RoleIcon.vue         # 角色图标
+├── views/                   # 首页、规则、角色、版型等页面
+├── admin/                   # 本地内容看板（不作为公开页面上线）
+└── data/
+    ├── content.js           # 后端数据加载与本地兜底
+    ├── roles.js             # 内置角色数据
+    ├── variants.js          # 内置版型数据
+    └── glossary.js          # 术语数据
+```
 
-### 社区应用（/community/）
+## 部署
 
-省略
+本站使用相对资源路径和 Hash 路由，构建后将 `dist/` 交给静态服务器即可。社区前端部署在独立的 `/community/` 子路径，不要与本站 `dist/` 混放。
+
+仓库所有者可使用本地 `deploy.sh` 完成构建、上传和线上检查。该脚本包含个人服务器配置，已被 `.gitignore` 排除；其他开发者可按自己的静态托管方式部署。
