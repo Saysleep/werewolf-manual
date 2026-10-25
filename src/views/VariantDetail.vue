@@ -27,13 +27,13 @@
       </div>
     </section>
 
-    <!-- 夜间流程 -->
-    <section v-if="v.nightFlow && v.nightFlow.length" class="night-sec">
-      <h2 class="sub-title">夜间流程</h2>
+    <!-- 夜间流程（有 firstNightFlow 时拆分为首夜/次夜起两个流程） -->
+    <section v-for="flow in nightFlows" :key="flow.title" class="night-sec">
+      <h2 class="sub-title">{{ flow.title }}</h2>
       <div class="night-chart">
-        <div v-for="(step, i) in v.nightFlow" :key="i" class="nc-step">
+        <div v-for="(step, i) in flow.steps" :key="i" class="nc-step">
           <div class="nc-idx">{{ i + 1 }}</div>
-          <div v-if="i < v.nightFlow.length - 1" class="nc-line"></div>
+          <div v-if="i < flow.steps.length - 1" class="nc-line"></div>
           <div class="nc-name">{{ step }}</div>
         </div>
       </div>
@@ -108,6 +108,18 @@ const prev = computed(() => (idx.value > 0 ? variants[idx.value - 1] : null))
 const next = computed(() => (idx.value < variants.length - 1 ? variants[idx.value + 1] : null))
 
 const campOrder = ['wolf', 'god', 'folk', 'third']
+
+// 有 firstNightFlow 时拆成「首夜流程 + 次夜起流程」，否则单个「夜间流程」
+const nightFlows = computed(() => {
+  if (!v.value) return []
+  const flows = []
+  const hasFirst = v.value.firstNightFlow && v.value.firstNightFlow.length
+  if (hasFirst) flows.push({ title: '首夜流程', steps: v.value.firstNightFlow })
+  if (v.value.nightFlow && v.value.nightFlow.length) {
+    flows.push({ title: hasFirst ? '次夜起流程' : '夜间流程', steps: v.value.nightFlow })
+  }
+  return flows
+})
 const configByCamp = computed(() => {
   if (!v.value) return []
   return campOrder

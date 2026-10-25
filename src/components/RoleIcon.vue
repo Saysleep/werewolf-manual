@@ -135,6 +135,25 @@
       <path d="M7 3 h10 l4 6 -9 12 L3 9 Z" />
       <path d="M3 9 h18 M7 3 l3 6 2 -6 2 6 3 -6" />
     </template>
+    <template v-else-if="name === 'statue'">
+      <!-- 石像鬼：角 + 蹲踞石像 + 基座 -->
+      <path d="M8.5 3.5 L10 7 M15.5 3.5 L14 7" />
+      <circle cx="12" cy="10" r="3.2" />
+      <path d="M9 13.5 C6 14 4.5 16.5 4 20 M15 13.5 C18 14 19.5 16.5 20 20" />
+      <path d="M4 20 H20" />
+    </template>
+    <template v-else-if="name === 'grave'">
+      <!-- 守墓人：墓碑 + 十字 + 地面 -->
+      <path d="M7 21 V9 a5 5 0 0 1 10 0 V21" />
+      <path d="M12 10.5 v5.5 M9.8 12.8 h4.4" />
+      <path d="M4 21 h16" />
+    </template>
+    <template v-else-if="name === 'hunt'">
+      <!-- 猎魔人：瞄准镜 -->
+      <circle cx="12" cy="12" r="6.5" />
+      <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none" />
+      <path d="M12 2.5 v3 M12 18.5 v3 M2.5 12 h3 M18.5 12 h3" />
+    </template>
     <template v-else>
       <circle cx="12" cy="12" r="8" />
     </template>

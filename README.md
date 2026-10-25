@@ -16,11 +16,11 @@
 | 页面 | 路由 | 内容 |
 | --- | --- | --- |
 | 首页 | `/` | 简介、收录统计、版型速览（机械狼通灵师 / 预女猎白混 / 狼王守卫 / 狼美人骑士）、四大阵营 |
-| 基础规则 | `/rules` | 11 步昼夜流程（含「退水自爆环节」）、胜负判定、发言规范与违规、术语表（32 条，流程/身份/战术三组）、附录·面杀法官手势；顶部锚点目录快速跳转 |
-| 角色图鉴 | `/roles` | 31 个角色，阵营筛选 + 关键字搜索（角色名 / 英文名 / 技能） |
-| 版型大全 | `/variants` | 11 个 12 人版型，标签 + 难度（1–5）组合筛选 |
+| 基础规则 | `/rules` | 昼夜流程、胜负判定、发言规范与违规、术语表、附录·面杀法官手势；顶部锚点目录快速跳转 |
+| 角色图鉴 | `/roles` | 若干个角色，阵营筛选 + 关键字搜索（角色名 / 英文名 / 技能） |
+| 版型大全 | `/variants` | 若干个 12 人版型，标签 + 难度（1–5）组合筛选 |
 | 版型详情 | `/variants/:id` | 阵营配置、竖向夜间流程图、规则与攻略（好人 / 狼人 / 进阶三视角）、上一版下一版导航 |
-| 社区 | `/community/`（外链整页跳转） | 瞎掰王 + 吉林麻将线上组局，独立全栈应用（xiabaiwang-vue-web 构建产物 + Spring Boot 后端），非本站路由 |
+| 社区 | `/community/`（外链整页跳转） | 独立全栈应用（xiabaiwang-vue-web 构建产物 + Spring Boot 后端），非本站路由 |
 
 全局能力：
 
@@ -45,9 +45,9 @@ src/
 │   ├── Variants.vue         # 版型大全
 │   └── VariantDetail.vue    # 版型详情（夜间流程图等）
 └── data/
-    ├── roles.js             # 角色数据（31 条）
-    ├── variants.js          # 版型数据（11 个在线 + 4 个注释中）
-    └── glossary.js          # 术语数据（32 条，glossary + glossaryCats）
+    ├── roles.js             # 角色数据
+    ├── variants.js          # 版型数据
+    └── glossary.js          # 术语数据（glossary + glossaryCats）
 ```
 
 ## 数据模型
@@ -77,39 +77,6 @@ src/
 - 角色：id、名称、英文名、阵营、技能描述等，由 `Roles.vue` 与全局搜索消费
 - 术语：`{ term, def, cat }`，`cat` 为 `flow` / `id` / `tactic` 三组；术语锚点 id `term-<下标>` 与全局搜索联动，**下标基于扁平数组，稳定不可变**
 
-## 开发
-
-```bash
-npm install --registry=https://registry.npmmirror.com --replace-registry-host=always --no-audit
-npm run dev      # 本地开发
-npm run build    # 构建到 dist/
-npm run preview  # 预览构建产物
-```
-
-> lockfile 锁定了国内镜像源，npm install 必须带上面的 registry 参数。
-
-## 部署
-
-仓库根目录有一键部署脚本 `deploy.sh`（构建 → scp 到服务器临时目录 → 原子替换线上 dist，自动保留 favicon）：
-
-```bash
-bash deploy.sh
-```
-
-脚本包含服务器信息，**已加入 .gitignore，严禁提交**。
-
-线上环境：阿里云 `/opt/xiabaiwang/frontend/dist`，nginx 容器 bind mount 该目录，替换时必须替换目录内容而非删除目录本身。
-
 ### 社区应用（/community/）
 
-- 社区前端（xiabaiwang-vue-web，`base: '/community/'`）部署在服务器独立目录 `/opt/xiabaiwang/community/dist`，由 xiabaiwang-vue-web 仓库根目录的 `deploy.sh` 部署，与本站互不干扰
-- nginx（`/opt/xiabaiwang/frontend/nginx.conf`，bind mount 进容器）含三段：`/community/` 静态托管（history 回退到社区自己的 index.html）、`/api/` 与 `/ws/` 反代到 `xiabaiwang-api-server:8080`（WS 已配 Upgrade + 3600s 超时）
-- 社区挂载点（容器内 `/usr/share/nginx/community-root/community`）**刻意放在主站 html 目录之外**——挂在里面会被本仓库 deploy.sh 的 `rm -rf dist/*` 清掉导致 500，有教训
-
-## 内容口径约定（重要）
-
-- 标注「大师赛官方」的版型，配置与规则以京城大师赛官方版型卡牌为准
-- 规则文案不自我创新：修改以项目已有原文 / 维护者提供的原文为准
-- 拿不准的攻略条目写「我不会……等待高手补充」，不编造
-- 注释掉的 4 个版型（白狼王守卫、血月猎魔、熊隐狼、盗贼丘比特）数据保留，恢复上线时需补 nightFlow 与猎人规则
-- 通用裁决惯例：女巫全程不可自救、毒杀克制一切出局技、出局不亮身份（暗牌）、自爆窗口限定在发言阶段
+省略

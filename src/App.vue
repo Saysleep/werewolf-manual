@@ -9,9 +9,7 @@
       <RouterLink to="/rules">规则</RouterLink>
       <RouterLink to="/roles">角色</RouterLink>
       <RouterLink to="/variants">版型</RouterLink>
-      <!-- 社区入口暂时下线（代码保留，恢复时取消注释）
       <a href="/community/">社区</a>
-      -->
       <button class="tb-search" @click="searchEl.open()">搜索</button>
     </nav>
   </header>
@@ -37,11 +35,9 @@
         <RouterLink to="/variants" active-class="active">
           <span class="idx">04</span>版型 · 板子图鉴
         </RouterLink>
-        <!-- 社区入口暂时下线（代码保留，恢复时取消注释）
         <a href="/community/">
           <span class="idx">05</span>社区 · 玩家反馈
         </a>
-        -->
       </nav>
 
       <button class="search-entry" @click="searchEl.open()">
