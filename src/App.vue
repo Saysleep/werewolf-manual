@@ -18,25 +18,25 @@
     <aside class="sidebar">
       <RouterLink to="/" class="brand">
         <div class="mark">狼人杀图鉴</div>
-        <div class="sub">WEREWOLF MANUAL</div>
+        <div class="sub">PALPLAY · WEREWOLF MANUAL</div>
       </RouterLink>
 
       <nav class="nav">
         <div class="nav-label">目录 / INDEX</div>
         <RouterLink to="/" exact-active-class="active">
-          <span class="idx">01</span>入夜 · 首页
+          <span class="idx">01</span>首页
         </RouterLink>
         <RouterLink to="/rules" active-class="active">
-          <span class="idx">02</span>规则 · 流程与胜负
+          <span class="idx">02</span>规则
         </RouterLink>
         <RouterLink to="/roles" active-class="active">
-          <span class="idx">03</span>角色 · 图鉴速查
+          <span class="idx">03</span>角色
         </RouterLink>
         <RouterLink to="/variants" active-class="active">
-          <span class="idx">04</span>版型 · 板子图鉴
+          <span class="idx">04</span>版型
         </RouterLink>
         <a href="/community/">
-          <span class="idx">05</span>社区 · 玩家反馈
+          <span class="idx">05</span>社区
         </a>
       </nav>
 
@@ -51,11 +51,7 @@
     </aside>
 
     <main class="main">
-      <RouterView v-slot="{ Component }">
-        <Transition name="fade" mode="out-in">
-          <component :is="Component" />
-        </Transition>
-      </RouterView>
+      <RouterView />
     </main>
   </div>
 
