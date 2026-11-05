@@ -2,10 +2,10 @@
   <div class="content">
     <section class="hero">
       <div class="hero-dots" aria-hidden="true"></div>
-      <div class="kicker">PALPLAY · WEREWOLF MANUAL</div>
-      <h1 class="hero-title">狼人杀图鉴</h1>
+      <div class="kicker">PALPLAY · LIBRARY</div>
+      <h1 class="hero-title">狼人杀图鉴 · 资料库</h1>
       <p class="hero-lede">
-        上桌之前，查清规则、角色与版型。这里收录 12 人标准局的完整流程、角色技能和阵容攻略，按需要直接查阅。
+        PalPlay 资料模块之一。上桌之前，查清规则、角色与版型。这里收录 12 人标准局的完整流程、角色技能和阵容攻略，按需要直接查阅。
       </p>
       <div class="hero-cta">
         <RouterLink to="/roles" class="btn primary">查询角色</RouterLink>
@@ -59,6 +59,21 @@
         </div>
       </div>
       <RouterLink to="/rules" class="more-link">查看完整规则 →</RouterLink>
+    </section>
+
+    <hr class="rule-hr" />
+
+    <section>
+      <h2 class="section-title"><span class="no">03</span>返回 PalPlay</h2>
+      <p class="sec-lede">图鉴只是 PalPlay 的一部分，去社区玩游戏或查看其他资料。</p>
+      <a href="/community/" class="palplay-back card">
+        <span class="pp-ico">🎮</span>
+        <div>
+          <h3>返回 PalPlay 社区</h3>
+          <p>进入游戏大厅、公共留言板与更多资料。</p>
+        </div>
+        <span class="pp-arrow">→</span>
+      </a>
     </section>
   </div>
 </template>
@@ -156,6 +171,18 @@ const cycleSteps = [
 .cycle-body p { color: var(--ink-60); font-size: 14px; margin-top: 2px; }
 .more-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 18px; font-size: 14px; color: var(--moon-bright); border-bottom: 1px solid transparent; }
 .more-link:hover { border-color: var(--moon-bright); }
+.palplay-back {
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  text-decoration: none;
+  color: var(--ink);
+}
+.pp-ico { font-size: 28px; }
+.palplay-back h3 { font-family: var(--serif); font-size: 18px; font-weight: 700; }
+.palplay-back p { margin-top: 4px; font-size: 13.5px; color: var(--ink-60); }
+.pp-arrow { margin-left: auto; font-size: 18px; color: var(--moon-bright); }
 @media (max-width: 640px) {
   .hero-stats { flex-direction: column; gap: 8px; }
   .grid { grid-template-columns: 1fr; }

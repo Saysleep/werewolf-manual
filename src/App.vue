@@ -3,13 +3,13 @@
 
   <!-- 移动端顶栏 -->
   <header class="topbar">
-    <RouterLink to="/" class="mark">狼人杀图鉴</RouterLink>
+    <RouterLink to="/" class="mark">PalPlay</RouterLink>
     <nav>
       <RouterLink to="/">首页</RouterLink>
       <RouterLink to="/rules">规则</RouterLink>
       <RouterLink to="/roles">角色</RouterLink>
       <RouterLink to="/variants">版型</RouterLink>
-      <a href="/community/">社区</a>
+      <a href="/community/">返回 PalPlay</a>
       <button class="tb-search" @click="searchEl.open()">搜索</button>
     </nav>
   </header>
@@ -17,12 +17,12 @@
   <div class="shell">
     <aside class="sidebar">
       <RouterLink to="/" class="brand">
-        <div class="mark">狼人杀图鉴</div>
-        <div class="sub">PALPLAY · WEREWOLF MANUAL</div>
+        <div class="mark">PalPlay</div>
+        <div class="sub">资料 · 狼人杀图鉴</div>
       </RouterLink>
 
       <nav class="nav">
-        <div class="nav-label">目录 / INDEX</div>
+        <div class="nav-label">狼人杀图鉴 / INDEX</div>
         <RouterLink to="/" exact-active-class="active">
           <span class="idx">01</span>首页
         </RouterLink>
@@ -36,7 +36,7 @@
           <span class="idx">04</span>版型
         </RouterLink>
         <a href="/community/">
-          <span class="idx">05</span>社区
+          <span class="idx">→</span>返回 PalPlay
         </a>
       </nav>
 
@@ -45,8 +45,9 @@
       </button>
 
       <div class="foot">
-        <div><span class="moon-mini"></span>天黑请闭眼</div>
-        <div style="margin-top: 6px">狼人杀规则与版型手册 · 静态站点</div>
+        <div><span class="moon-mini"></span>PalPlay 资料模块</div>
+        <div style="margin-top: 6px">狼人杀规则与版型手册</div>
+        <div style="margin-top: 12px"><a href="/community/" style="color: var(--moon-bright)">← 返回 PalPlay</a></div>
       </div>
     </aside>
 

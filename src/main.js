@@ -28,13 +28,13 @@ const router = createRouter({
 })
 
 router.afterEach((to) => {
-  if (to.path === '/') document.title = '狼人杀图鉴 · 规则与版型手册'
-  else if (to.path === '/rules') document.title = '基础规则 · 狼人杀图鉴'
-  else if (to.path === '/roles') document.title = '角色图鉴 · 狼人杀图鉴'
-  else if (to.path === '/variants') document.title = '版型大全 · 狼人杀图鉴'
+  if (to.path === '/') document.title = 'PalPlay · 狼人杀图鉴资料'
+  else if (to.path === '/rules') document.title = '基础规则 · PalPlay 狼人杀图鉴'
+  else if (to.path === '/roles') document.title = '角色图鉴 · PalPlay 狼人杀图鉴'
+  else if (to.path === '/variants') document.title = '版型大全 · PalPlay 狼人杀图鉴'
   else if (to.path.startsWith('/variants/')) {
     const v = variantMap[to.params.id]
-    document.title = v ? `${v.name} · 版型大全 · 狼人杀图鉴` : '版型大全 · 狼人杀图鉴'
+    document.title = v ? `${v.name} · PalPlay 狼人杀图鉴` : '版型大全 · PalPlay 狼人杀图鉴'
   }
 })
 
